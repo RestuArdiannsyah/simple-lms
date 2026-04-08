@@ -1,4 +1,4 @@
-# Simple LMS Docker Compose
+# Progress 1: Simple LMS - Docker & Django Foundation
 
 ## Langkah Pengerjaan
 
@@ -90,3 +90,56 @@ Django terhubung ke PostgreSQL melalui hostname `db`, yaitu nama service databas
 
 ### 5. Kenapa menggunakan environment variables?
 Environment variables digunakan agar konfigurasi sensitif seperti password database tidak ditulis langsung di source code. Cara ini termasuk best practice dan memudahkan deployment ke production.
+
+-------
+
+# Progress 2: Simple LMS - Database Design & ORM Implementation
+
+Pada progress ini, project Simple LMS dikembangkan dengan fokus pada **desain database menggunakan Django ORM**, pengelolaan relasi antar model, serta optimasi query untuk meningkatkan performa aplikasi.
+
+## Fitur yang Diimplementasikan
+- **User**
+  - Menggunakan custom user model
+  - Mendukung role: `admin`, `instructor`, dan `student`
+
+- **Category**
+  - Menggunakan relasi self-reference untuk mendukung kategori bertingkat
+
+- **Course**
+  - Terhubung ke instructor dan category
+  - Mendukung optimasi query untuk kebutuhan list halaman course
+
+- **Lesson**
+  - Terhubung ke course
+  - Memiliki field `order` untuk urutan materi
+
+- **Enrollment**
+  - Relasi student ke course
+  - Dilengkapi unique constraint agar student tidak bisa mendaftar course yang sama dua kali
+
+- **Progress**
+  - Digunakan untuk tracking penyelesaian lesson oleh student
+
+## Query Optimization
+Optimasi query diterapkan menggunakan:
+- `select_related()` -> untuk ForeignKey relation
+- `prefetch_related()` -> untuk reverse relation
+- custom QuerySet manager untuk reusable query optimization
+
+File demo optimasi tersedia pada:
+` lms/demo_queries.py `
+
+## Lampiran screenshot hasil implementasi model dan optimasi query:
+
+### 1. Migrasi
+![Migrasi](screenshot/progres-2/migrasi.png)
+
+
+### 2. Create User
+![Create User](screenshot/progres-2/create-user.png)
+
+### 3. Django Shell
+![Django Shell](screenshot/progres-2/Django-shell.png)
+
+### 4. http://localhost:8000/admin/
+![Admin Page](screenshot/progres-2/admin.png)
