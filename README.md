@@ -143,3 +143,62 @@ File demo optimasi tersedia pada:
 
 ### 4. http://localhost:8000/admin/
 ![Admin Page](screenshot/progres-2/admin.png)
+
+-------
+
+# Progress 3: Simple LMS - REST API & Authentication System
+
+Pada progress ini, project Simple LMS dikembangkan menjadi **REST API lengkap** menggunakan **Django Ninja**. Fokus utama adalah implementasi keamanan menggunakan **JWT Authentication**, validasi data dengan **Pydantic Schemas**, dan pembatasan akses berbasis peran (**RBAC**).
+
+## Fitur yang Diimplementasikan
+
+- **Authentication System (JWT)**
+  - Register user baru dengan role spesifik.
+  - Login sistem menggunakan Access & Refresh Token.
+  - Update profil dan proteksi endpoint `/auth/me`.
+
+- **Role-Based Access Control (RBAC)**
+  - Implementasi custom decorators: `@is_instructor`, `@is_admin`, dan `@is_student`.
+  - Pembatasan akses API berdasarkan peran pengguna.
+
+- **Course Management**
+  - **Public:** List course dengan fitur *pagination* dan *search filtering*.
+  - **Instructor:** Membuat dan memperbarui course (dengan validasi kepemilikan/ownership).
+  - **Admin:** Otoritas penuh untuk menghapus course.
+
+- **Enrollment & Progress Tracking**
+  - Student dapat mendaftar ke course.
+  - Tracking progres belajar dengan menandai lesson sebagai "Complete".
+
+- **API Documentation**
+  - Dokumentasi otomatis menggunakan **Swagger UI** yang dapat diakses secara interaktif.
+
+## Teknologi & Library
+- **Django Ninja**: Framework API cepat dengan tipe data Python.
+- **Django Ninja JWT**: Handler untuk JSON Web Token.
+- **Pydantic**: Schema validation untuk input dan output data.
+
+## Cara Menjalankan API
+1. Pastikan database sudah dimigrasi:
+  
+   ` python manage.py makemigrations lms ` dan ` python manage.py migrate  ` 
+
+   ![Admin Page](screenshot_progres/progres-3/migrasi.png)
+
+2. Jalankan Server
+
+   ` python manage.py runserver ` 
+
+   ![Server](screenshot_progres/progres-3/Screenshot%202026-04-30%20151638.png)
+
+3. Akses dokumentasi API di: http://127.0.0.1:8000/api/docs
+
+   ![dokumentasi API](screenshot_progres/progres-3/Screenshot%202026-04-30%20151755.png)
+
+4. Regrister/Auth 
+
+   ![Regrister/Auth](screenshot_progres/progres-3/Screenshot%202026-04-30%20151846.png)
+
+5. Postman Colection
+
+   ![Postman Colection](screenshot_progres/progres-3/Screenshot%202026-04-30%20155422.png)
