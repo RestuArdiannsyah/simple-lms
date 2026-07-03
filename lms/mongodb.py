@@ -1,10 +1,12 @@
+import os
 from pymongo import MongoClient
 
 client = MongoClient(
-    "mongodb://mongodb:27017"
+    os.getenv("MONGODB_URI", "mongodb://mongodb:27017"),
+    serverSelectionTimeoutMS=3000,
 )
 
-db = client["simple_lms"]
+db = client[os.getenv("MONGODB_DB_NAME", "simple_lms")]
 
 activity_logs = db["activity_logs"]
 

@@ -1,0 +1,32 @@
+# Changelog
+
+Semua perubahan penting pada API Simple LMS dicatat di file ini.
+Bisa juga diakses lewat endpoint `GET /api/changelog`.
+
+## [1.1.0] - 2026-07-01
+
+### Added
+- Format response dan error yang konsisten di seluruh endpoint (`success`, `message`, `data`/`errors`)
+- Exception handler terpusat untuk permission, validation, not found, dan server error
+- Endpoint `GET /api/health` — cek status koneksi Database (PostgreSQL), Redis, dan MongoDB
+- Endpoint `GET /api/changelog` — riwayat perubahan API per versi
+
+### Fixed
+- Koneksi database yang sebelumnya hardcode ke SQLite, sekarang benar-benar terhubung ke PostgreSQL via environment variable
+- `SECRET_KEY`, kredensial Redis/Celery/MongoDB tidak lagi hardcode, dibaca dari `.env`
+- `ninja_extra` didaftarkan ke `INSTALLED_APPS` (sebelumnya endpoint login JWT selalu gagal)
+- Dependency `email-validator` yang hilang dari `requirements.txt`
+- Bug `lms/__init__.py` yang mengimpor modul Celery yang tidak ada
+- Timeout koneksi MongoDB dipersingkat supaya endpoint health check tidak menggantung lama saat MongoDB down
+
+## [1.0.0] - 2026-06-01
+
+### Added
+- Rilis awal Simple LMS API
+- Autentikasi JWT (register, login, refresh token)
+- Role-based access control: admin, instructor, student
+- Endpoint course, lesson, enrollment, dan progress
+- Caching Redis untuk course list/detail
+- Activity logging dan learning analytics ke MongoDB
+- Background task via Celery (email notifikasi, generate certificate)
+- Dokumentasi API via Swagger/OpenAPI

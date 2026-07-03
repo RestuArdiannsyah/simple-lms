@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Category, Course, Lesson, Enrollment, Progress
+from .models import User, Category, Course, Lesson, Enrollment, Progress, Announcement
 
 
 class LessonInline(admin.TabularInline):
@@ -39,3 +39,10 @@ class EnrollmentAdmin(admin.ModelAdmin):
 class ProgressAdmin(admin.ModelAdmin):
     list_display = ("enrollment", "lesson", "is_completed")
     list_filter = ("is_completed",)
+
+
+@admin.register(Announcement)
+class AnnouncementAdmin(admin.ModelAdmin):
+    list_display = ("title", "course", "created_at")
+    list_filter = ("course",)
+    search_fields = ("title", "content")
